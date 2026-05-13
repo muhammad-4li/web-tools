@@ -1,0 +1,48 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@theme {
+    /* Brand colors — vivid multi-color palette */
+    --color-brand-violet:  #7c3aed;
+    --color-brand-purple:  #9333ea;
+    --color-brand-pink:    #ec4899;
+    --color-brand-orange:  #f97316;
+    --color-brand-amber:   #f59e0b;
+    --color-brand-teal:    #14b8a6;
+    --color-brand-cyan:    #06b6d4;
+    --color-brand-green:   #22c55e;
+
+    /* Typography */
+    --font-inter:         'Inter', sans-serif;
+    --font-space:         'Space Grotesk', sans-serif;
+}
+
+/* Global utility: gradient text */
+.gradient-text {
+    background: linear-gradient(135deg, #7c3aed 0%, #ec4899 50%, #f97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Tool card hover glow */
+.tool-card-glow:hover {
+    box-shadow: 0 0 30px -5px var(--glow-color, #7c3aed88);
+    transform: translateY(-4px);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: linear-gradient(180deg, #7c3aed, #ec4899); border-radius: 9999px; }
+
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../**/*.blade.php';
+@source '../**/*.js';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+        'Segoe UI Symbol', 'Noto Color Emoji';
+}

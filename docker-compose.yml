@@ -1,0 +1,28 @@
+
+services:
+  web-tools-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web-tools-app
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+      - "5173:5173"
+    volumes:
+      - .:/var/www/html
+      - ./storage:/var/www/html/storage
+      - ./bootstrap/cache:/var/www/html/bootstrap/cache
+    networks:
+      - web-tools-network
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+
+networks:
+  web-tools-network:
+    driver: bridge
+    name: web-tools-network
