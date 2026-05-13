@@ -1,6 +1,6 @@
 <script setup>
-import { ref, provide } from 'vue';
-import { Head } from '@inertiajs/vue3';
+import { ref, provide, computed } from 'vue';
+import { Head, usePage } from '@inertiajs/vue3';
 import Navigation from '@/Components/Navigation.vue';
 import AdsTopBar from '@/Components/Ads/TopBar.vue';
 import AdsSecondBar from '@/Components/Ads/SecondBar.vue';
@@ -16,25 +16,93 @@ const props = defineProps({
 const showPopup = ref(false);
 provide('triggerAdPopup', () => { showPopup.value = true; });
 
-const pageTitle       = props.seo?.title       || 'MA Tools — Free Online Web Tools';
-const pageDescription = props.seo?.description || 'Free online tools for images and PDFs.';
-const pageKeywords    = props.seo?.keywords     || '';
-const ogImage         = props.seo?.og_image     || '/images/og-default.png';
-const siteBase        = 'https://ma-tools.com';
+const siteBase   = 'https://ma-tools.com';
+const siteName   = 'MA Tools';
+
+const pageTitle       = computed(() => props.seo?.title       || 'MA Tools — Free Online Web Tools');
+const pageDescription = computed(() => props.seo?.description || 'Free online tools for images and PDFs. 100% browser-based, nothing uploaded.');
+const pageKeywords    = computed(() => props.seo?.keywords    || '');
+const ogImage         = computed(() => props.seo?.og_image    || '/images/og-default.png');
+const robotsMeta      = computed(() => props.seo?.robots      || 'index, follow');
+
+// Canonical: explicit override > current full URL
+const page       = usePage();
+const canonical  = computed(() => {
+    if (props.seo?.canonical_url) return props.seo.canonical_url;
+    return siteBase + page.url;
+});
+
+// JSON-LD — WebSite + Organisation
+const jsonLd = computed(() => JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+        {
+            '@type':            'WebSite',
+            '@id':              siteBase + '/#website',
+            url:                siteBase + '/',
+            name:               siteName,
+            description:        'Free online browser-based tools for images and PDFs.',
+            potentialAction:    {
+                '@type':        'SearchAction',
+                target:         { '@type': 'EntryPoint', urlTemplate: siteBase + '/blog?q={search_term_string}' },
+                'query-input':  'required name=search_term_string',
+            },
+        },
+        {
+            '@type':    'Organization',
+            '@id':      siteBase + '/#organization',
+            name:       siteName,
+            url:        siteBase + '/',
+            logo:       {
+                '@type': 'ImageObject',
+                url:     siteBase + '/favicon.svg',
+            },
+        },
+        {
+            '@type':        'WebPage',
+            '@id':          canonical.value + '#webpage',
+            url:            canonical.value,
+            name:           pageTitle.value,
+            description:    pageDescription.value,
+            isPartOf:       { '@id': siteBase + '/#website' },
+            inLanguage:     'en-US',
+        },
+    ],
+}));
 </script>
 
 <template>
     <Head>
         <title>{{ pageTitle }}</title>
-        <meta name="description"       :content="pageDescription">
-        <meta name="keywords"          :content="pageKeywords">
-        <meta property="og:title"      :content="pageTitle">
-        <meta property="og:description" :content="pageDescription">
-        <meta property="og:image"      :content="siteBase + ogImage">
-        <meta property="og:type"       content="website">
-        <meta name="twitter:card"      content="summary_large_image">
-        <meta name="twitter:title"     :content="pageTitle">
+
+        <!-- Core -->
+        <meta name="description"         :content="pageDescription">
+        <meta name="keywords"            :content="pageKeywords">
+        <meta name="robots"              :content="robotsMeta">
+        <link rel="canonical"            :href="canonical">
+
+        <!-- Open Graph -->
+        <meta property="og:type"         content="website">
+        <meta property="og:site_name"    :content="siteName">
+        <meta property="og:locale"       content="en_US">
+        <meta property="og:url"          :content="canonical">
+        <meta property="og:title"        :content="pageTitle">
+        <meta property="og:description"  :content="pageDescription">
+        <meta property="og:image"        :content="siteBase + ogImage">
+        <meta property="og:image:width"  content="1200">
+        <meta property="og:image:height" content="630">
+        <meta property="og:image:alt"    :content="pageTitle">
+
+        <!-- Twitter / X -->
+        <meta name="twitter:card"        content="summary_large_image">
+        <meta name="twitter:site"        content="@matools">
+        <meta name="twitter:title"       :content="pageTitle">
         <meta name="twitter:description" :content="pageDescription">
+        <meta name="twitter:image"       :content="siteBase + ogImage">
+        <meta name="twitter:image:alt"   :content="pageTitle">
+
+        <!-- JSON-LD -->
+        <script type="application/ld+json" v-html="jsonLd"></script>
     </Head>
 
     <div class="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30">

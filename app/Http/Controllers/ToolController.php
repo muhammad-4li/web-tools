@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PageSeo;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -9,7 +10,17 @@ class ToolController extends Controller
 {
     private function seo(string $page): array
     {
-        return config("seo.pages.{$page}", []);
+        $db     = PageSeo::where('page_key', $page)->first();
+        $config = config("seo.pages.{$page}", []);
+
+        return [
+            'title'         => $db?->title         ?: ($config['title'] ?? ''),
+            'description'   => $db?->description   ?: ($config['description'] ?? ''),
+            'keywords'      => $db?->keywords       ?: ($config['keywords'] ?? ''),
+            'og_image'      => $db?->og_image       ?: ($config['og_image'] ?? config('seo.default_og')),
+            'canonical_url' => $db?->canonical_url  ?: null,
+            'robots'        => $db?->robots         ?: 'index, follow',
+        ];
     }
 
     public function home(): Response

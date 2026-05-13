@@ -5,6 +5,7 @@ use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
+use App\Http\Controllers\Admin\PageSeoController as AdminPageSeoController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -61,6 +62,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout',   [AdminAuthController::class, 'logout'])->name('logout');
         Route::get('/',          [AdminAuthController::class, 'dashboard'])->name('dashboard');
         Route::resource('blog',  AdminBlogController::class)->except(['show']);
+
+        // Page SEO management
+        Route::get('/seo',              [AdminPageSeoController::class, 'index'])->name('seo.index');
+        Route::get('/seo/{key}/edit',   [AdminPageSeoController::class, 'edit'])->name('seo.edit');
+        Route::put('/seo/{key}',        [AdminPageSeoController::class, 'update'])->name('seo.update');
     });
 });
 

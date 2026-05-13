@@ -11,6 +11,7 @@ function logout() {
 const navItems = [
     { label: 'Dashboard',  href: '/admin',       icon: '📊' },
     { label: 'Blog Posts', href: '/admin/blog',  icon: '📝' },
+    { label: 'Page SEO',   href: '/admin/seo',   icon: '🔍' },
 ];
 </script>
 

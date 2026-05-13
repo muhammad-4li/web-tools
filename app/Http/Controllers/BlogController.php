@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BlogPost;
+use App\Models\PageSeo;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,12 +16,17 @@ class BlogController extends Controller
             ->latest('published_at')
             ->paginate(12);
 
+        $db = PageSeo::where('page_key', 'blog')->first();
+
         return Inertia::render('Blog/Index', [
             'posts' => $posts,
             'seo'   => [
-                'title'       => 'Blog — MA Tools Tips & Tutorials',
-                'description' => 'Tips, tutorials and guides for using free online image and PDF tools. Learn how to crop images, remove backgrounds, merge PDFs and more.',
-                'keywords'    => 'image tools blog, pdf tools tutorials, online tools tips, web tools guide',
+                'title'         => $db?->title       ?: 'Blog — MA Tools Tips & Tutorials',
+                'description'   => $db?->description ?: 'Tips, tutorials and guides for using free online image and PDF tools. Learn how to crop images, remove backgrounds, merge PDFs and more.',
+                'keywords'      => $db?->keywords    ?: 'image tools blog, pdf tools tutorials, online tools tips, web tools guide',
+                'og_image'      => $db?->og_image    ?: null,
+                'canonical_url' => $db?->canonical_url ?: null,
+                'robots'        => $db?->robots      ?: 'index, follow',
             ],
         ]);
     }
