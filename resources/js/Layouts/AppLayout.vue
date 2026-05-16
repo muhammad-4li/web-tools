@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, computed } from 'vue';
+import { ref, provide, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import Navigation from '@/Components/Navigation.vue';
 import AdsTopBar from '@/Components/Ads/TopBar.vue';
@@ -13,8 +13,17 @@ const props = defineProps({
     seo: { type: Object, default: () => ({}) },
 });
 
-const showPopup = ref(false);
-provide('triggerAdPopup', () => { showPopup.value = true; });
+const showPopup     = ref(false);
+const pendingAction = ref(null);
+provide('triggerAdPopup', (callback = null) => {
+    pendingAction.value = callback;
+    showPopup.value = true;
+});
+function onPopupClose() {
+    showPopup.value = false;
+    pendingAction.value?.();
+    pendingAction.value = null;
+}
 
 const siteBase   = 'https://ma-tools.com';
 const siteName   = 'MA Tools';
@@ -69,6 +78,21 @@ const jsonLd = computed(() => JSON.stringify({
         },
     ],
 }));
+
+let jsonLdScript = null;
+onMounted(() => {
+    jsonLdScript = document.createElement('script');
+    jsonLdScript.type = 'application/ld+json';
+    jsonLdScript.textContent = jsonLd.value;
+    document.head.appendChild(jsonLdScript);
+});
+watch(jsonLd, (val) => {
+    if (jsonLdScript) jsonLdScript.textContent = val;
+});
+onBeforeUnmount(() => {
+    jsonLdScript?.remove();
+    jsonLdScript = null;
+});
 </script>
 
 <template>
@@ -101,8 +125,6 @@ const jsonLd = computed(() => JSON.stringify({
         <meta name="twitter:image"       :content="siteBase + ogImage">
         <meta name="twitter:image:alt"   :content="pageTitle">
 
-        <!-- JSON-LD -->
-        <script type="application/ld+json" v-html="jsonLd"></script>
     </Head>
 
     <div class="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30">
@@ -173,5 +195,5 @@ const jsonLd = computed(() => JSON.stringify({
     </div>
 
     <!-- POPUP AD (shown after tool action) -->
-    <AdsPopup v-if="showPopup" @close="showPopup = false" />
+    <AdsPopup v-if="showPopup" @close="onPopupClose" />
 </template>

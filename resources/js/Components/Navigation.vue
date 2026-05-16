@@ -23,10 +23,10 @@ const tools = [
                 <!-- Logo -->
                 <Link href="/" class="flex items-center gap-2 group">
                     <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                        <span class="text-white font-black text-sm">MA</span>
+                        <span class="text-white font-black text-sm">KT</span>
                     </div>
                     <span class="font-black text-xl tracking-tight">
-                        <span class="text-violet-600">MA</span><span class="text-gray-900">Tools</span>
+                        <span class="text-violet-600">Khan</span><span class="text-gray-900">Tools</span>
                     </span>
                 </Link>
 

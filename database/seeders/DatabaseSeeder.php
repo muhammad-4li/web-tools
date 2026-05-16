@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // Admin user — change password after first deploy!
         User::updateOrCreate(
-            ['email' => env('ADMIN_EMAIL', 'admin@ma-tools.com')],
+            ['email' => env('ADMIN_EMAIL', 'admin@admin.com')],
             [
                 'name'     => 'Admin',
-                'password' => bcrypt(env('ADMIN_PASSWORD', 'change-me-immediately')),
+                'password' => bcrypt(env('ADMIN_PASSWORD', '123456')),
                 'is_admin' => true,
             ]
         );

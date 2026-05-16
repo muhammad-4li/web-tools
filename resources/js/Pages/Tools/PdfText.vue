@@ -62,7 +62,6 @@ async function applyTexts() {
         const finalBytes = await doc.save();
         const blob       = new Blob([finalBytes], { type: 'application/pdf' });
         result.value     = URL.createObjectURL(blob);
-        triggerAdPopup();
     } finally {
         loading.value = false;
     }
@@ -159,7 +158,7 @@ function resetTool() { pdfFile.value = null; result.value = null; texts.value = 
 
                 <button v-if="result"
                     class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full text-lg hover:shadow-xl hover:scale-105 transition-all"
-                    @click="download"
+                    @click="triggerAdPopup(() => download())"
                 >⬇️ Download PDF</button>
 
                 <button class="px-5 py-3 border border-gray-200 text-gray-600 rounded-full hover:bg-gray-50 transition-all text-sm" @click="resetTool">✕ Reset</button>

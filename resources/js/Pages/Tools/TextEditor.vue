@@ -33,20 +33,24 @@ const editor = useEditor({
 
 function downloadHtml() {
     const blob = new Blob([editor.value.getHTML()], { type: 'text/html' });
-    const a    = document.createElement('a');
-    a.href     = URL.createObjectURL(blob);
-    a.download = 'document.html';
-    a.click();
-    triggerAdPopup();
+    const url  = URL.createObjectURL(blob);
+    triggerAdPopup(() => {
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = 'document.html';
+        a.click();
+    });
 }
 
 function downloadTxt() {
     const blob = new Blob([editor.value.getText()], { type: 'text/plain' });
-    const a    = document.createElement('a');
-    a.href     = URL.createObjectURL(blob);
-    a.download = 'document.txt';
-    a.click();
-    triggerAdPopup();
+    const url  = URL.createObjectURL(blob);
+    triggerAdPopup(() => {
+        const a    = document.createElement('a');
+        a.href     = url;
+        a.download = 'document.txt';
+        a.click();
+    });
 }
 
 function copyHtml() {

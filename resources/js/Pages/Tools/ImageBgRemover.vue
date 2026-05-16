@@ -45,11 +45,12 @@ async function processRemove() {
 }
 
 function downloadResult() {
-    const a   = document.createElement('a');
-    a.href    = resultUrl.value;
-    a.download = `${filename.value}-no-bg.png`;
-    a.click();
-    triggerAdPopup();
+    triggerAdPopup(() => {
+        const a    = document.createElement('a');
+        a.href     = resultUrl.value;
+        a.download = `${filename.value}-no-bg.png`;
+        a.click();
+    });
 }
 
 function resetTool() {

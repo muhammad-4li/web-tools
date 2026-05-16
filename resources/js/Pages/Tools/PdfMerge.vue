@@ -41,7 +41,6 @@ async function mergePDFs() {
         const bytes = await merged_doc.save();
         const blob  = new Blob([bytes], { type: 'application/pdf' });
         merged.value = URL.createObjectURL(blob);
-        triggerAdPopup();
     } finally {
         merging.value = false;
     }
@@ -116,7 +115,7 @@ const dragOver = ref(false);
 
                     <button v-if="merged"
                         class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full text-lg hover:shadow-xl hover:scale-105 transition-all"
-                        @click="download"
+                        @click="triggerAdPopup(() => download())"
                     >⬇️ Download merged.pdf</button>
 
                     <button class="px-5 py-3 border border-gray-200 text-gray-600 rounded-full hover:bg-gray-50 transition-all text-sm" @click="resetTool">✕ Reset</button>

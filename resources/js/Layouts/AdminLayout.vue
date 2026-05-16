@@ -9,22 +9,23 @@ function logout() {
 }
 
 const navItems = [
-    { label: 'Dashboard',  href: '/admin',       icon: '📊' },
-    { label: 'Blog Posts', href: '/admin/blog',  icon: '📝' },
-    { label: 'Page SEO',   href: '/admin/seo',   icon: '🔍' },
+    { label: 'Dashboard',  href: '/admin',          icon: '📊' },
+    { label: 'Blog Posts', href: '/admin/blog',     icon: '📝' },
+    { label: 'Page SEO',   href: '/admin/seo',      icon: '🔍' },
+    { label: 'Profile',    href: '/admin/profile',  icon: '👤' },
 ];
 </script>
 
 <template>
     <div class="min-h-screen bg-gray-50 flex">
-        <Head><title>{{ title }} — MA Tools Admin</title></Head>
+        <Head><title>{{ title }} — KhanTools Admin</title></Head>
 
         <!-- Sidebar -->
         <aside class="w-60 bg-gradient-to-b from-gray-900 via-violet-950 to-gray-900 text-white flex flex-col shadow-2xl">
             <div class="px-6 py-5 border-b border-white/10">
                 <Link href="/admin" class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-xs font-black">MA</div>
-                    <span class="font-black text-lg"><span class="text-violet-400">MA</span>Tools</span>
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-xs font-black">KT</div>
+                    <span class="font-black text-lg"><span class="text-violet-400">Khan</span>Tools</span>
                 </Link>
                 <p class="text-xs text-white/40 mt-1">Admin Panel</p>
             </div>
@@ -34,7 +35,7 @@ const navItems = [
                     v-for="item in navItems" :key="item.href"
                     :href="item.href"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all"
-                    :class="$page.url.startsWith(item.href)
+                    :class="($page.url === item.href || (item.href !== '/admin' && $page.url.startsWith(item.href)))
                         ? 'bg-violet-600 text-white shadow-lg'
                         : 'text-white/70 hover:bg-white/10 hover:text-white'"
                 >

@@ -6,6 +6,7 @@ use App\Http\Controllers\ToolController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\PageSeoController as AdminPageSeoController;
+use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
 
@@ -62,11 +63,17 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout',   [AdminAuthController::class, 'logout'])->name('logout');
         Route::get('/',          [AdminAuthController::class, 'dashboard'])->name('dashboard');
         Route::resource('blog',  AdminBlogController::class)->except(['show']);
+        Route::patch('blog/{blog}/toggle-status', [AdminBlogController::class, 'toggleStatus'])->name('blog.toggle-status');
 
         // Page SEO management
         Route::get('/seo',              [AdminPageSeoController::class, 'index'])->name('seo.index');
         Route::get('/seo/{key}/edit',   [AdminPageSeoController::class, 'edit'])->name('seo.edit');
         Route::put('/seo/{key}',        [AdminPageSeoController::class, 'update'])->name('seo.update');
+
+        // Profile
+        Route::get('/profile',           [AdminProfileController::class, 'show'])->name('profile');
+        Route::put('/profile',           [AdminProfileController::class, 'update'])->name('profile.update');
+        Route::put('/profile/password',  [AdminProfileController::class, 'updatePassword'])->name('profile.password');
     });
 });
 

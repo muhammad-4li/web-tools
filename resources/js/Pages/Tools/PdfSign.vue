@@ -63,7 +63,6 @@ async function embedSignature() {
         const finalBytes = await doc.save();
         const blob       = new Blob([finalBytes], { type: 'application/pdf' });
         signed.value     = URL.createObjectURL(blob);
-        triggerAdPopup();
     } finally {
         loading.value = false;
     }
@@ -152,7 +151,7 @@ function resetTool() { pdfFile.value = null; signed.value = null; sigPad.value?.
 
                 <button v-if="signed"
                     class="px-8 py-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-bold rounded-full text-lg hover:shadow-xl hover:scale-105 transition-all"
-                    @click="download"
+                    @click="triggerAdPopup(() => download())"
                 >⬇️ Download Signed PDF</button>
 
                 <button class="px-5 py-3 border border-gray-200 text-gray-600 rounded-full hover:bg-gray-50 transition-all text-sm" @click="resetTool">✕ Reset</button>

@@ -1,17 +1,28 @@
 <script setup>
+import { ref } from 'vue';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { Link, router } from '@inertiajs/vue3';
 
 defineProps({ posts: Object });
+
+const deleteModal = ref({ show: false, id: null, title: '' });
 
 function formatDate(dt) {
     if (!dt) return '—';
     return new Date(dt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 }
 
-function deletePost(id, title) {
-    if (!confirm(`Delete "${title}"? This cannot be undone.`)) return;
-    router.delete(`/admin/blog/${id}`);
+function confirmDelete(id, title) {
+    deleteModal.value = { show: true, id, title };
+}
+
+function executeDelete() {
+    router.delete(`/admin/blog/${deleteModal.value.id}`, { preserveScroll: true });
+    deleteModal.value.show = false;
+}
+
+function toggleStatus(id) {
+    router.patch(`/admin/blog/${id}/toggle-status`, {}, { preserveScroll: true });
 }
 </script>
 
@@ -44,14 +55,16 @@ function deletePost(id, title) {
                             <p class="text-xs text-gray-400 mt-0.5">{{ post.slug }}</p>
                         </td>
                         <td class="px-4 py-4">
-                            <span
-                                class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide"
+                            <button
+                                @click="toggleStatus(post.id)"
+                                class="px-2.5 py-1 rounded-full text-xs font-bold uppercase tracking-wide transition-all hover:scale-105"
                                 :class="post.is_published
-                                    ? 'bg-green-100 text-green-700'
-                                    : 'bg-amber-100 text-amber-700'"
+                                    ? 'bg-green-100 text-green-700 hover:bg-green-200'
+                                    : 'bg-amber-100 text-amber-700 hover:bg-amber-200'"
+                                :title="post.is_published ? 'Click to move to draft' : 'Click to publish'"
                             >
                                 {{ post.is_published ? 'Published' : 'Draft' }}
-                            </span>
+                            </button>
                         </td>
                         <td class="px-4 py-4 text-gray-500">{{ formatDate(post.published_at) }}</td>
                         <td class="px-4 py-4 text-right">
@@ -61,7 +74,7 @@ function deletePost(id, title) {
                                 >Edit</Link>
                                 <button
                                     class="px-3 py-1.5 border border-gray-200 rounded-lg text-gray-400 font-medium hover:bg-red-50 hover:border-red-300 hover:text-red-600 transition-all text-xs"
-                                    @click="deletePost(post.id, post.title)"
+                                    @click="confirmDelete(post.id, post.title)"
                                 >Delete</button>
                                 <a v-if="post.is_published" :href="`/blog/${post.slug}`" target="_blank"
                                     class="px-3 py-1.5 border border-gray-200 rounded-lg text-gray-400 font-medium hover:bg-gray-50 transition-all text-xs"
@@ -89,5 +102,43 @@ function deletePost(id, title) {
                 v-html="link.label"
             />
         </div>
+
+        <!-- Delete confirm modal -->
+        <Teleport to="body">
+            <Transition enter-active-class="transition duration-200" enter-from-class="opacity-0" enter-to-class="opacity-100"
+                leave-active-class="transition duration-150" leave-from-class="opacity-100" leave-to-class="opacity-0">
+                <div v-if="deleteModal.show"
+                    class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+                    @click.self="deleteModal.show = false"
+                >
+                    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden"
+                        @click.stop>
+                        <div class="p-6">
+                            <div class="flex items-center gap-4 mb-5">
+                                <div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center text-2xl shrink-0">🗑️</div>
+                                <div>
+                                    <h3 class="font-black text-gray-900 text-lg leading-tight">Delete Post?</h3>
+                                    <p class="text-sm text-gray-400 mt-0.5">This cannot be undone.</p>
+                                </div>
+                            </div>
+                            <div class="bg-gray-50 rounded-xl px-4 py-3 border border-gray-100 text-sm text-gray-700">
+                                &ldquo;<span class="font-semibold">{{ deleteModal.title }}</span>&rdquo;
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6 flex gap-3">
+                            <button
+                                class="flex-1 px-4 py-2.5 border border-gray-200 text-gray-700 rounded-xl font-semibold text-sm hover:bg-gray-50 transition-all"
+                                @click="deleteModal.show = false"
+                            >Cancel</button>
+                            <button
+                                class="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-xl font-bold text-sm hover:bg-red-700 hover:shadow-lg transition-all"
+                                @click="executeDelete"
+                            >Yes, Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </Transition>
+        </Teleport>
+
     </AdminLayout>
 </template>

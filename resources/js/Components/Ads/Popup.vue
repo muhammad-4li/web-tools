@@ -1,5 +1,7 @@
 <script setup>
-const emit = defineEmits(['close']);
+const emit        = defineEmits(['close']);
+const publisherId = import.meta.env.VITE_ADSENSE_PUBLISHER_ID;
+const slotId      = import.meta.env.VITE_ADSENSE_SLOT_POPUP;
 </script>
 
 <template>
@@ -27,8 +29,8 @@ const emit = defineEmits(['close']);
             <div class="p-6 flex flex-col items-center min-h-[250px]">
                 <ins class="adsbygoogle block w-full"
                      style="display:block"
-                     data-ad-client="ca-pub-XXXXXXXXXX"
-                     data-ad-slot="6666666666"
+                     :data-ad-client="publisherId"
+                     :data-ad-slot="slotId"
                      data-ad-format="rectangle"
                      data-full-width-responsive="true"></ins>
             </div>

@@ -35,12 +35,13 @@ function onFileChange(e) {
 function downloadCrop() {
     const { canvas } = cropperRef.value.getResult();
     if (!canvas) return;
-    const ext  = format.value === 'image/jpeg' ? 'jpg' : 'png';
-    const link = document.createElement('a');
-    link.download = `${filename.value}-cropped.${ext}`;
-    link.href     = canvas.toDataURL(format.value, 0.92);
-    link.click();
-    triggerAdPopup();
+    const ext = format.value === 'image/jpeg' ? 'jpg' : 'png';
+    triggerAdPopup(() => {
+        const link    = document.createElement('a');
+        link.download = `${filename.value}-cropped.${ext}`;
+        link.href     = canvas.toDataURL(format.value, 0.92);
+        link.click();
+    });
 }
 
 function resetTool() { imageUrl.value = null; }
