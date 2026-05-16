@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Services\AdsSettings;
 use Illuminate\Support\ServiceProvider;
+use Inertia\Inertia;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Share ads settings with every Inertia page via $page.props.ads
+        Inertia::share([
+            'ads' => fn () => AdsSettings::get(),
+        ]);
     }
 }

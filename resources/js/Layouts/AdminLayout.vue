@@ -9,10 +9,11 @@ function logout() {
 }
 
 const navItems = [
-    { label: 'Dashboard',  href: '/admin',          icon: '📊' },
-    { label: 'Blog Posts', href: '/admin/blog',     icon: '📝' },
-    { label: 'Page SEO',   href: '/admin/seo',      icon: '🔍' },
-    { label: 'Profile',    href: '/admin/profile',  icon: '👤' },
+    { label: 'Dashboard',    href: '/admin',          icon: '📊' },
+    { label: 'Blog Posts',   href: '/admin/blog',     icon: '📝' },
+    { label: 'Page SEO',     href: '/admin/seo',      icon: '🔍' },
+    { label: 'Ads Settings', href: '/admin/ads',      icon: '💰' },
+    { label: 'Profile',      href: '/admin/profile',  icon: '👤' },
 ];
 </script>
 

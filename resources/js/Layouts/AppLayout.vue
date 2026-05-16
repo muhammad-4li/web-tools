@@ -1,5 +1,5 @@
 <script setup>
-import { ref, provide, computed, onMounted, onBeforeUnmount, watch } from 'vue';
+import { ref, inject, computed, onMounted, onBeforeUnmount, watch } from 'vue';
 import { Head, usePage } from '@inertiajs/vue3';
 import Navigation from '@/Components/Navigation.vue';
 import AdsTopBar from '@/Components/Ads/TopBar.vue';
@@ -13,14 +13,24 @@ const props = defineProps({
     seo: { type: Object, default: () => ({}) },
 });
 
-const showPopup     = ref(false);
-const pendingAction = ref(null);
-provide('triggerAdPopup', (callback = null) => {
-    pendingAction.value = callback;
-    showPopup.value = true;
+const popupState    = inject('adPopupState', { showPopup: ref(false), pendingAction: ref(null) });
+const showPopup     = popupState.showPopup;
+const pendingAction = popupState.pendingAction;
+
+// Ads enable/disable — read from Inertia shared prop
+const adsEnabled = computed(() => page.props.ads?.enabled ?? false);
+
+// When ads are disabled, bypass the popup and run the callback immediately
+watch(showPopup, (val) => {
+    if (val && !adsEnabled.value) {
+        showPopup.value     = false;
+        pendingAction.value?.();
+        pendingAction.value = null;
+    }
 });
+
 function onPopupClose() {
-    showPopup.value = false;
+    showPopup.value     = false;
     pendingAction.value?.();
     pendingAction.value = null;
 }
@@ -130,19 +140,19 @@ onBeforeUnmount(() => {
     <div class="min-h-screen flex flex-col bg-gradient-to-br from-slate-50 via-violet-50/30 to-pink-50/30">
 
         <!-- TOP AD BAR -->
-        <AdsTopBar />
+        <AdsTopBar v-if="adsEnabled" />
 
         <!-- NAVIGATION -->
         <Navigation />
 
         <!-- SECOND AD BAR -->
-        <AdsSecondBar />
+        <AdsSecondBar v-if="adsEnabled" />
 
         <!-- MAIN 3-COLUMN LAYOUT -->
         <main class="flex-1 w-full max-w-screen-2xl mx-auto px-2 lg:px-4 py-6 flex gap-4">
 
             <!-- LEFT SIDEBAR AD -->
-            <aside class="hidden xl:flex flex-col items-center gap-4 w-40 shrink-0">
+            <aside v-if="adsEnabled" class="hidden xl:flex flex-col items-center gap-4 w-40 shrink-0">
                 <AdsLeftSidebar />
             </aside>
 
@@ -152,14 +162,14 @@ onBeforeUnmount(() => {
             </div>
 
             <!-- RIGHT SIDEBAR AD -->
-            <aside class="hidden xl:flex flex-col items-center gap-4 w-40 shrink-0">
+            <aside v-if="adsEnabled" class="hidden xl:flex flex-col items-center gap-4 w-40 shrink-0">
                 <AdsRightSidebar />
             </aside>
 
         </main>
 
         <!-- BOTTOM AD BAR -->
-        <AdsBottom />
+        <AdsBottom v-if="adsEnabled" />
 
         <!-- FOOTER -->
         <footer class="bg-gradient-to-r from-violet-900 via-purple-900 to-pink-900 text-white py-10 mt-4">
@@ -195,5 +205,5 @@ onBeforeUnmount(() => {
     </div>
 
     <!-- POPUP AD (shown after tool action) -->
-    <AdsPopup v-if="showPopup" @close="onPopupClose" />
+    <AdsPopup v-if="showPopup && adsEnabled" @close="onPopupClose" />
 </template>

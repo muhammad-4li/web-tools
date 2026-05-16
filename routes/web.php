@@ -3,6 +3,7 @@
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\ToolController;
+use App\Http\Controllers\Admin\AdsController as AdminAdsController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\PageSeoController as AdminPageSeoController;
@@ -69,6 +70,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/seo',              [AdminPageSeoController::class, 'index'])->name('seo.index');
         Route::get('/seo/{key}/edit',   [AdminPageSeoController::class, 'edit'])->name('seo.edit');
         Route::put('/seo/{key}',        [AdminPageSeoController::class, 'update'])->name('seo.update');
+
+        // Ads Settings
+        Route::get('/ads', [AdminAdsController::class, 'edit'])->name('ads.edit');
+        Route::put('/ads', [AdminAdsController::class, 'update'])->name('ads.update');
 
         // Profile
         Route::get('/profile',           [AdminProfileController::class, 'show'])->name('profile');

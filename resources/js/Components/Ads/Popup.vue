@@ -1,7 +1,10 @@
 <script setup>
+import { computed } from 'vue';
+import { usePage } from '@inertiajs/vue3';
 const emit        = defineEmits(['close']);
-const publisherId = import.meta.env.VITE_ADSENSE_PUBLISHER_ID;
-const slotId      = import.meta.env.VITE_ADSENSE_SLOT_POPUP;
+const ads         = computed(() => usePage().props.ads ?? {});
+const publisherId = computed(() => ads.value.publisher_id ?? '');
+const slotId      = computed(() => ads.value.slot_popup ?? '');
 </script>
 
 <template>
