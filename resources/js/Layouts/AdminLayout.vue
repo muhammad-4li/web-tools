@@ -11,6 +11,7 @@ function logout() {
 const navItems = [
     { label: 'Dashboard',    href: '/admin',          icon: '📊' },
     { label: 'Blog Posts',   href: '/admin/blog',     icon: '📝' },
+    { label: 'Pages',        href: '/admin/pages',    icon: '📄' },
     { label: 'Page SEO',     href: '/admin/seo',      icon: '🔍' },
     { label: 'Ads Settings', href: '/admin/ads',      icon: '💰' },
     { label: 'Profile',      href: '/admin/profile',  icon: '👤' },
@@ -25,7 +26,7 @@ const navItems = [
         <aside class="w-60 bg-gradient-to-b from-gray-900 via-violet-950 to-gray-900 text-white flex flex-col shadow-2xl">
             <div class="px-6 py-5 border-b border-white/10">
                 <Link href="/admin" class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-xs font-black">KT</div>
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-xs font-black">KN</div>
                     <span class="font-black text-lg"><span class="text-violet-400">Khan</span>Tools</span>
                 </Link>
                 <p class="text-xs text-white/40 mt-1">Admin Panel</p>

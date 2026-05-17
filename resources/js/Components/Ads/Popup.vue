@@ -6,6 +6,7 @@ const ads         = computed(() => usePage().props.ads ?? {});
 const publisherId = computed(() => ads.value.publisher_id ?? '');
 const slotId      = computed(() => ads.value.slot_popup ?? '');
 onMounted(() => {
+    if (!publisherId.value || !slotId.value) return;
     try { (window.adsbygoogle = window.adsbygoogle || []).push({}); } catch {}
 });
 </script>
@@ -33,7 +34,7 @@ onMounted(() => {
 
             <!-- Ad content -->
             <div class="p-6 flex flex-col items-center min-h-[250px]">
-                <ins class="adsbygoogle block w-full"
+                <ins v-if="publisherId && slotId" class="adsbygoogle block w-full"
                      style="display:block"
                      :data-ad-client="publisherId"
                      :data-ad-slot="slotId"

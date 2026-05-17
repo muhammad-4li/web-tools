@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\ToolController;
 use App\Http\Controllers\Admin\AdsController as AdminAdsController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\BlogController as AdminBlogController;
 use App\Http\Controllers\Admin\PageSeoController as AdminPageSeoController;
+use App\Http\Controllers\Admin\StaticPageController as AdminStaticPageController;
 use App\Http\Controllers\Admin\ProfileController as AdminProfileController;
 use App\Http\Middleware\AdminMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +37,15 @@ Route::prefix('blog')->group(function () {
     Route::get('/',        [BlogController::class, 'index'])->name('blog.index');
     Route::get('/{slug}',  [BlogController::class, 'show'])->name('blog.show');
 });
+
+/*
+|--------------------------------------------------------------------------
+| Static Pages (About / Contact / Privacy)
+|--------------------------------------------------------------------------
+*/
+Route::get('/about',   [StaticPageController::class, 'about'])->name('about');
+Route::get('/contact', [StaticPageController::class, 'contact'])->name('contact');
+Route::get('/privacy', [StaticPageController::class, 'privacy'])->name('privacy');
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +81,11 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/seo',              [AdminPageSeoController::class, 'index'])->name('seo.index');
         Route::get('/seo/{key}/edit',   [AdminPageSeoController::class, 'edit'])->name('seo.edit');
         Route::put('/seo/{key}',        [AdminPageSeoController::class, 'update'])->name('seo.update');
+
+        // Static Pages (About / Contact / Privacy)
+        Route::get('/pages',              [AdminStaticPageController::class, 'index'])->name('pages.index');
+        Route::get('/pages/{key}/edit',   [AdminStaticPageController::class, 'edit'])->name('pages.edit');
+        Route::put('/pages/{key}',        [AdminStaticPageController::class, 'update'])->name('pages.update');
 
         // Ads Settings
         Route::get('/ads', [AdminAdsController::class, 'edit'])->name('ads.edit');

@@ -22,6 +22,9 @@ class SitemapController extends Controller
             '/tools/pdf-text',
             '/tools/text-editor',
             '/blog',
+            '/about',
+            '/contact',
+            '/privacy',
         ];
 
         foreach ($tools as $path) {

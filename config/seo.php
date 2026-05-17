@@ -48,5 +48,20 @@ return [
             'keywords'    => 'online text editor, rich text editor, free text editor, html editor, word processor online',
             'og_image'    => '/images/og-text-editor.png',
         ],
+        'about' => [
+            'title'       => 'About KhanTools — Free Browser-Based Online Tools',
+            'description' => 'Learn about KhanTools, a free suite of browser-based tools for images and PDFs. No uploads, no registration, 100% private.',
+            'keywords'    => 'about khantools, free online tools, browser tools, image tools, pdf tools',
+        ],
+        'contact' => [
+            'title'       => 'Contact KhanTools — Get in Touch',
+            'description' => 'Have a question, found a bug, or want to suggest a new tool? Reach out to the KhanTools team.',
+            'keywords'    => 'contact khantools, support, feedback, report bug, suggest tool',
+        ],
+        'privacy' => [
+            'title'       => 'Privacy Policy — KhanTools',
+            'description' => 'Read the KhanTools privacy policy. Learn what data we collect, how we use cookies, and your rights under GDPR.',
+            'keywords'    => 'privacy policy, cookies, gdpr, data collection, khantools',
+        ],
     ],
 ];

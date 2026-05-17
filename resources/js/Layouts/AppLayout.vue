@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
             <div class="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div>
                     <div class="text-2xl font-black tracking-tight mb-3">
-                        <span class="text-yellow-300">MA</span>
+                        <span class="text-yellow-300">KN</span>
                         <span class="text-white">Tools</span>
                     </div>
                     <p class="text-violet-200 text-sm leading-relaxed">Free online tools that run entirely in your browser. No uploads. 100% private.</p>
@@ -195,7 +195,10 @@ onBeforeUnmount(() => {
                 <div>
                     <h4 class="font-bold text-yellow-300 mb-3 uppercase tracking-wider text-xs">Info</h4>
                     <ul class="space-y-1 text-sm text-violet-200">
-                        <li><a href="/blog" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="/blog"        class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="/about"       class="hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="/contact"     class="hover:text-white transition-colors">Contact</a></li>
+                        <li><a href="/privacy"     class="hover:text-white transition-colors">Privacy Policy</a></li>
                         <li><a href="/sitemap.xml" class="hover:text-white transition-colors">Sitemap</a></li>
                     </ul>
                     <p class="text-violet-400 text-xs mt-4">&copy; {{ new Date().getFullYear() }} ma-tools.com</p>

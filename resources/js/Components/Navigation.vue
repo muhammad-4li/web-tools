@@ -23,7 +23,7 @@ const tools = [
                 <!-- Logo -->
                 <Link href="/" class="flex items-center gap-2 group">
                     <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-                        <span class="text-white font-black text-sm">KT</span>
+                        <span class="text-white font-black text-sm">KN</span>
                     </div>
                     <span class="font-black text-xl tracking-tight">
                         <span class="text-violet-600">Khan</span><span class="text-gray-900">Tools</span>
@@ -43,6 +43,12 @@ const tools = [
                     </template>
                     <Link href="/blog" class="ml-2 px-4 py-1.5 rounded-full bg-gradient-to-r from-violet-600 to-pink-600 text-white text-sm font-semibold hover:shadow-lg hover:scale-105 transition-all">
                         Blog
+                    </Link>
+                    <Link href="/about" class="ml-1 px-3 py-1.5 rounded-lg text-sm font-medium text-gray-500 hover:text-violet-700 hover:bg-violet-50 transition-all">
+                        About
+                    </Link>
+                    <Link href="/contact" class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-500 hover:text-violet-700 hover:bg-violet-50 transition-all">
+                        Contact
                     </Link>
                 </div>
 
@@ -75,6 +81,12 @@ const tools = [
                 </Link>
                 <Link href="/blog" class="col-span-2 text-center px-3 py-2 rounded-lg bg-gradient-to-r from-violet-600 to-pink-600 text-white text-sm font-semibold" @click="mobileOpen = false">
                     📰 Blog
+                </Link>
+                <Link href="/about" class="text-center px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors" @click="mobileOpen = false">
+                    About
+                </Link>
+                <Link href="/contact" class="text-center px-3 py-2 rounded-lg bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition-colors" @click="mobileOpen = false">
+                    Contact
                 </Link>
             </div>
         </div>
