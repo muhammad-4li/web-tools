@@ -20,8 +20,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     {{-- Google AdSense --}}
-    @if(env('ADSENSE_PUBLISHER_ID') && env('ADSENSE_PUBLISHER_ID') !== 'ca-pub-XXXXXXXXXX')
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ env('ADSENSE_PUBLISHER_ID') }}" crossorigin="anonymous"></script>
+    @php $adsPublisherId = \App\Services\AdsSettings::get()['publisher_id'] ?? ''; @endphp
+    @if($adsPublisherId && str_starts_with($adsPublisherId, 'ca-pub-'))
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ $adsPublisherId }}" crossorigin="anonymous"></script>
     @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
