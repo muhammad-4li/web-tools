@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
 import { router } from '@inertiajs/vue3';
 
@@ -28,6 +28,14 @@ function submit() {
         onFinish: ()  => { saving.value = false; },
     });
 }
+
+const adsTxtContent = computed(() => {
+    const id = (form.value.publisher_id ?? '').trim();
+    if (id && id.startsWith('ca-pub-')) {
+        return `google.com, ${id}, DIRECT, f08c47fec0942fa0`;
+    }
+    return null;
+});
 </script>
 
 <template>
@@ -81,6 +89,40 @@ function submit() {
                         <p v-if="errors.publisher_id" class="text-red-500 text-xs mt-1">{{ errors.publisher_id }}</p>
                         <p class="text-xs text-gray-400 mt-1">Found in your AdSense dashboard — starts with <code class="bg-gray-100 px-1 rounded">ca-pub-</code></p>
                     </div>
+                </div>
+
+                <!-- ads.txt Status -->
+                <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 space-y-4">
+                    <div class="flex items-center justify-between">
+                        <h2 class="font-black text-gray-800">ads.txt Status</h2>
+                        <span v-if="adsTxtContent" class="inline-flex items-center gap-1.5 text-xs font-semibold text-green-700 bg-green-50 px-3 py-1 rounded-full">
+                            ✅ Configured
+                        </span>
+                        <span v-else class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-700 bg-amber-50 px-3 py-1 rounded-full">
+                            ⚠️ Not configured
+                        </span>
+                    </div>
+                    <p class="text-sm text-gray-500 -mt-2">
+                        Google crawls <code class="bg-gray-100 px-1 rounded text-xs">/ads.txt</code> to verify you are an authorised publisher.
+                        The file is generated automatically from your Publisher ID above — no manual upload needed.
+                    </p>
+
+                    <!-- Live preview -->
+                    <div>
+                        <p class="text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5">File preview</p>
+                        <pre v-if="adsTxtContent" class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-xs font-mono text-gray-800 break-all whitespace-pre-wrap">{{ adsTxtContent }}</pre>
+                        <pre v-else class="bg-gray-50 border border-gray-200 rounded-xl px-4 py-3 text-xs font-mono text-gray-400 italic"># ads.txt — enter your Publisher ID above to generate this file</pre>
+                    </div>
+
+                    <!-- Direct link -->
+                    <a
+                        href="/ads.txt"
+                        target="_blank"
+                        rel="noopener"
+                        class="inline-flex items-center gap-1.5 text-xs font-semibold text-violet-600 hover:text-violet-800 transition-colors"
+                    >
+                        🔗 Open /ads.txt in browser
+                    </a>
                 </div>
 
                 <!-- Slot IDs -->

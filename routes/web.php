@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdsTxtController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\StaticPageController;
@@ -53,6 +54,7 @@ Route::get('/privacy', [StaticPageController::class, 'privacy'])->name('privacy'
 |--------------------------------------------------------------------------
 */
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+Route::get('/ads.txt',    AdsTxtController::class)->name('ads-txt');
 Route::get('/robots.txt', function () {
     $base = config('app.url');
     return response(
