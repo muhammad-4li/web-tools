@@ -184,8 +184,9 @@ onBeforeUnmount(() => {
                 <div>
                     <h4 class="font-bold text-yellow-300 mb-3 uppercase tracking-wider text-xs">Tools</h4>
                     <ul class="space-y-1 text-sm text-violet-200">
-                        <li><a href="/tools/image-crop"       class="hover:text-white transition-colors">Image Crop</a></li>
-                        <li><a href="/tools/image-bg-remover" class="hover:text-white transition-colors">BG Remover</a></li>
+                        <li><a href="/tools/image-crop"        class="hover:text-white transition-colors">Image Crop</a></li>
+                        <li><a href="/tools/image-crop-circle" class="hover:text-white transition-colors">Circle Crop</a></li>
+                        <li><a href="/tools/image-bg-remover"  class="hover:text-white transition-colors">BG Remover</a></li>
                         <li><a href="/tools/pdf-merge"        class="hover:text-white transition-colors">PDF Merge</a></li>
                         <li><a href="/tools/pdf-sign"         class="hover:text-white transition-colors">PDF Sign</a></li>
                         <li><a href="/tools/pdf-text"         class="hover:text-white transition-colors">PDF Text</a></li>

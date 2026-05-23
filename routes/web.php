@@ -21,8 +21,9 @@ use Illuminate\Support\Facades\Route;
 */
 Route::get('/', [ToolController::class, 'home'])->name('home');
 Route::prefix('tools')->group(function () {
-    Route::get('/image-crop',       [ToolController::class, 'imageCrop'])->name('tools.image-crop');
-    Route::get('/image-bg-remover', [ToolController::class, 'imageBgRemover'])->name('tools.image-bg-remover');
+    Route::get('/image-crop',        [ToolController::class, 'imageCrop'])->name('tools.image-crop');
+    Route::get('/image-crop-circle', [ToolController::class, 'imageCropCircle'])->name('tools.image-crop-circle');
+    Route::get('/image-bg-remover',  [ToolController::class, 'imageBgRemover'])->name('tools.image-bg-remover');
     Route::get('/pdf-merge',        [ToolController::class, 'pdfMerge'])->name('tools.pdf-merge');
     Route::get('/pdf-sign',         [ToolController::class, 'pdfSign'])->name('tools.pdf-sign');
     Route::get('/pdf-text',         [ToolController::class, 'pdfText'])->name('tools.pdf-text');

@@ -15,6 +15,7 @@ class PageSeoController extends Controller
     private array $pages = [
         'home'              => 'Home Page',
         'image-crop'        => 'Image Crop Tool',
+        'image-crop-circle' => 'Circle Crop Tool',
         'image-bg-remover'  => 'Background Remover',
         'pdf-merge'         => 'PDF Merge',
         'pdf-sign'          => 'PDF Sign',

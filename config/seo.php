@@ -18,6 +18,12 @@ return [
             'keywords'    => 'image crop online, free image cropper, crop photo online, crop picture, image editor',
             'og_image'    => '/images/og-image-crop.png',
         ],
+        'image-crop-circle' => [
+            'title'       => 'Circle Image Crop — KhanTools Free Online Circular Image Cropper',
+            'description' => 'Crop your image into a perfect circle online for free. Output is a transparent PNG. Works entirely in your browser — no uploads, 100% private.',
+            'keywords'    => 'circle image crop, circular crop online, crop photo circle, round image crop, circular image maker',
+            'og_image'    => '/images/og-image-crop.png',
+        ],
         'image-bg-remover' => [
             'title'       => 'Remove Image Background — KhanTools Free AI Background Remover',
             'description' => 'Remove image backgrounds instantly with AI. Works 100% in your browser — no uploads, completely private. Download transparent PNG.',

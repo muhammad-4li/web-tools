@@ -6,8 +6,9 @@ const page = usePage();
 const mobileOpen = ref(false);
 
 const tools = [
-    { name: 'Image Crop',   href: '/tools/image-crop',       icon: '✂️',  color: 'from-violet-500 to-purple-600' },
-    { name: 'BG Remover',   href: '/tools/image-bg-remover', icon: '🪄',  color: 'from-pink-500 to-rose-600' },
+    { name: 'Image Crop',    href: '/tools/image-crop',        icon: '✂️',  color: 'from-violet-500 to-purple-600' },
+    { name: 'Circle Crop',   href: '/tools/image-crop-circle', icon: '⭕',  color: 'from-fuchsia-500 to-violet-600' },
+    { name: 'BG Remover',    href: '/tools/image-bg-remover',  icon: '🪄',  color: 'from-pink-500 to-rose-600' },
     { name: 'PDF Merge',    href: '/tools/pdf-merge',         icon: '📄',  color: 'from-orange-500 to-amber-600' },
     { name: 'PDF Sign',     href: '/tools/pdf-sign',          icon: '✍️',  color: 'from-teal-500 to-cyan-600' },
     { name: 'PDF Text',     href: '/tools/pdf-text',          icon: '📝',  color: 'from-blue-500 to-indigo-600' },

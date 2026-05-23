@@ -16,6 +16,7 @@ class SitemapController extends Controller
         $tools = [
             '/',
             '/tools/image-crop',
+            '/tools/image-crop-circle',
             '/tools/image-bg-remover',
             '/tools/pdf-merge',
             '/tools/pdf-sign',

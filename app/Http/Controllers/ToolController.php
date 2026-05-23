@@ -33,6 +33,11 @@ class ToolController extends Controller
         return Inertia::render('Tools/ImageCrop', ['seo' => $this->seo('image-crop')]);
     }
 
+    public function imageCropCircle(): Response
+    {
+        return Inertia::render('Tools/ImageCropCircle', ['seo' => $this->seo('image-crop-circle')]);
+    }
+
     public function imageBgRemover(): Response
     {
         return Inertia::render('Tools/ImageBgRemover', ['seo' => $this->seo('image-bg-remover')]);

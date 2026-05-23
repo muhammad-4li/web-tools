@@ -16,6 +16,16 @@ const tools = [
         border:  'border-violet-200',
     },
     {
+        name:    'Circle Crop',
+        desc:    'Crop any image into a perfect circle — transparent PNG output.',
+        href:    '/tools/image-crop-circle',
+        icon:    '⭕',
+        gradient:'from-fuchsia-500 to-violet-600',
+        glow:    '#a21caf',
+        bg:      'from-fuchsia-50 to-violet-50',
+        border:  'border-fuchsia-200',
+    },
+    {
         name:    'BG Remover',
         desc:    'Remove image backgrounds with AI — 100% in browser.',
         href:    '/tools/image-bg-remover',
