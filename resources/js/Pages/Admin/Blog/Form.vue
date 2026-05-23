@@ -1,9 +1,8 @@
 <script setup>
-import { ref, watch, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch, computed } from 'vue';
 import { router, Link } from '@inertiajs/vue3';
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import 'jodit/es2021/jodit.min.css';
-import { Jodit } from 'jodit';
+import { useJoditEditor } from '@/Composables/useJoditEditor.js';
 
 const props  = defineProps({ post: Object });
 const isEdit = !!props.post;
@@ -26,46 +25,11 @@ const tab        = ref('content');  // 'content' | 'seo'
 const mobileView = ref('edit');     // 'edit' | 'preview'
 
 // ── Jodit editor ───────────────────────────────────────────────────────────
-const editorEl      = ref(null);
-let   joditInstance = null;
-
-onMounted(() => {
-    if (!editorEl.value) return;
-    // Set content on the raw textarea BEFORE Jodit.make() reads it
-    editorEl.value.value = form.value.content;
-    joditInstance = Jodit.make(editorEl.value, {
-        height: 520,
-        language: 'en',
-        toolbarButtonSize: 'small',
-        buttons: [
-            'source', '|',
-            'bold', 'italic', 'underline', 'strikethrough', '|',
-            'ul', 'ol', '|',
-            'font', 'fontsize', 'paragraph', '|',
-            'brush', '|',
-            'align', '|',
-            'link', 'image', 'table', '|',
-            'hr', 'eraser', '|',
-            'undo', 'redo', '|',
-            'fullsize',
-        ],
-        uploader:                  { insertImageAsBase64URI: true },
-        showCharsCounter:          false,
-        showWordsCounter:          false,
-        showXPathInStatusbar:      false,
-        askBeforePasteHTML:        false,
-        askBeforePasteFromWord:    false,
-        defaultActionOnPaste:      'insert_clear_html',
-    });
-    joditInstance.events.on('change', (html) => {
-        form.value.content = html;
-    });
+const content = computed({
+    get: () => form.value.content,
+    set: (v) => { form.value.content = v; },
 });
-
-onBeforeUnmount(() => {
-    joditInstance?.destruct();
-    joditInstance = null;
-});
+const { editorEl, getInstance } = useJoditEditor({ content, height: 520, watchTab: tab });
 
 // ── Auto-generate slug from title (new posts only) ─────────────────────────
 watch(() => form.value.title, (val) => {
@@ -81,7 +45,8 @@ watch(() => form.value.title, (val) => {
 
 // ── Submit ─────────────────────────────────────────────────────────────────
 function submit() {
-    if (joditInstance) form.value.content = joditInstance.value;
+    const inst = getInstance();
+    if (inst) form.value.content = inst.value;
     loading.value = true;
     errors.value  = {};
     const url    = isEdit ? `/admin/blog/${props.post.id}` : '/admin/blog';
